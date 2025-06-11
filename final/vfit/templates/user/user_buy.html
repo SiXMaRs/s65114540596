@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+<div class="text-gray-100 font-poppins min-h-screen pt-20">
+    <div class="flex">
+        {% include 'user/menu.html' %}
+        <div class="w-3/4 p-8 ml-6 mb-6 mr-8">
+            <div class="flex justify-start mb-6 -mt-8 -mr-8 -ml-8">
+                <a href="?status=all" class="w-1/2 py-4 px-4 text-xl text-center cursor-pointer {% if status == 'all' %} bg-yellow-500  border-b-2 border-yellow-400 text-black {% else %} bg-gray-600 text-yellow-600  hover:text-white {% endif %}">
+                    ประวัติการซื้อ
+                </a>
+                <a href="?status=pending" class="w-1/2 py-4 px-4 text-xl text-center cursor-pointer {% if status == 'pending' %} bg-yellow-500  border-b-2 border-yellow-400 text-black {% else %} bg-gray-600 text-yellow-600  hover:text-white {% endif %}">
+                    อุปกรณ์ที่ต้องรับ
+                </a>
+            </div>
+
+            <div class="w-full h-full overflow-hidden">
+                <div class="p-4 sticky z-20">
+                    <h2 class="text-lg font-bold">
+                        {% if status == 'pending' %}
+                            อุปกรณ์ที่ต้องรับ
+                        {% else %}
+                            ประวัติการซื้ออุปกรณ์
+                        {% endif %}
+                    </h2>
+                </div>
+
+                <div class="p-8 overflow-y-auto h-[calc(100%-4rem)]">
+                    <div>
+                        {% for buy in buy_history %}
+                        <div class="flex items-center text-white border-b-2 p-4">
+                            <img src="{{ buy.product.image.url }}" alt="{{ buy.product.name }}" class="w-20 h-20 rounded mr-4">
+                            <div class="flex-1">
+                                <h3 class="font-bold">{{ buy.product.name }}</h3>
+                                <p>วันที่ซื้อ: {{ buy.buy_date|date:"d/m/Y" }}</p>
+                                <p>วันที่รับ: {{ buy.get_date|date:"d/m/Y" }}</p>
+                                <p>จำนวน: x{{ buy.amount }}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg text-white">{{ buy.product.price|intcomma }} บาท</p>
+                                <p>
+                                    สถานะ: 
+                                    {% if buy.is_received %}
+                                        <span class="text-green-400">มารับแล้ว</span>
+                                    {% else %}
+                                        <span class="text-yellow-400">รอรับสินค้า</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-center text-gray-500">ไม่มีรายการสินค้า</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Paginator -->
+                    <div class="mt-4 flex justify-center">
+                        <nav class="inline-flex">
+                            {% if buy_history.has_previous %}
+                                <a href="?status={{ status }}&page=1" class="px-3 py-2 bg-gray-700 text-white rounded-l hover:bg-gray-600">
+                                    <span class="material-icons">first_page</span>
+                                </a>
+                                <a href="?status={{ status }}&page={{ buy_history.previous_page_number }}" class="px-3 py-2 bg-gray-700 text-white hover:bg-gray-600">
+                                    <span class="material-icons">chevron_left</span>
+                                </a>
+                            {% endif %}
+                            
+                            <span class="px-3 py-2 text-white">
+                                {{ buy_history.number }} / {{ buy_history.paginator.num_pages }}
+                            </span>
+
+                            {% if buy_history.has_next %}
+                                <a href="?status={{ status }}&page={{ buy_history.next_page_number }}" class="px-3 py-2 bg-gray-700 text-white hover:bg-gray-600">
+                                    <span class="material-icons">chevron_right</span>
+                                </a>
+                                <a href="?status={{ status }}&page={{ buy_history.paginator.num_pages }}" class="px-3 py-2 bg-gray-700 text-white rounded-r hover:bg-gray-600">
+                                    <span class="material-icons">last_page</span>
+                                </a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

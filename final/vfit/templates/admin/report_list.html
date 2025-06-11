@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex bg-gray-900 text-gray-100 h-screen">
+    <div class="mt-20">
+        {% include 'admin/nav.html' %}
+    </div>
+    
+
+    <div class="flex-1 mt-20 ml-64">
+        <div class="grid grid-cols-2 gap-4 px-6 py-4">
+            <div class="bg-white text-black text-center py-4 rounded-lg">
+                <p class="text-lg">รายการแจ้งปัญหา:</p>
+                <p class="text-3xl">{{ in_progress_count }} ชิ้น</p>
+            </div>
+            <div class="bg-yellow-500 text-black text-center py-4 rounded-lg">
+                <p class="text-lg">อุปกรณ์ที่แก้ปัญหาแล้ว:</p>
+                <p class="text-3xl">{{ completed_count }} ชิ้น</p>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="px-6 py-4 flex justify-between">
+            <h1 class="text-2xl">รายการอุปกรณ์ที่แจ้งปัญหาวันนี้:</h1>
+            <button class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-600 flex items-center">
+                <span class="material-icons mr-2">filter_list</span>
+                ฟิลเตอร์
+            </button>
+        </div>
+
+        <div class="px-6 py-4">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-white border-b border-gray-700">
+                        <th class="p-4">รหัสอุปกรณ์</th>
+                        <th class="p-4">ชื่ออุปกรณ์</th>
+                        <th class="p-4">รูปอุปกรณ์</th>
+                        <th class="p-4">ประเภท</th>
+                        <th class="p-4">ผู้แจ้ง</th>
+                        <th class="p-4">วันที่แจ้ง</th>
+                        <th class="p-4">อาการ</th>
+                        <th class="p-4">สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                    <tr class="border-b border-gray-700">
+                        <td class="p-4">{{ report.rental_code.order_code }}</td>
+                        <td class="p-4">{{ report.rental_code.product.name }}</td>
+                        <td class="p-4">
+                            <img src="{{ report.rental_code.product.image.url }}" class="w-12 h-12 rounded" alt="Product Image">
+                        </td>
+                        <td class="p-4">{{ report.rental_code.product.category }}</td>
+                        <td class="p-3">
+                            <a href="javascript:void(0);" class="text-blue-400"
+                                onclick="showUserDetails(
+                                    '{{ report.rental_code.user.full_name }}',
+                                    '{{ report.rental_code.user.email }}',
+                                    '{{ report.rental_code.user.tel_number }}',
+                                    '{{ report.rental_code.user.sex }}',
+                                    '{{ report.rental_code.user.address }}',
+                                    '{{ report.rental_code.user.avatar.url  }}'
+                                )">
+                                {{ report.rental_code.user.full_name }}
+                            </a>
+                        </td>
+                        <td class="p-4">{{ report.report_date|date:"d/m/Y" }}</td>
+                        <td class="p-4">{{ report.issue_description|truncatechars:20 }}</td>
+                        <td class="p-4">
+                            {% if report.status == 'in_progress' %}
+                                <form method="POST" class="inline-block">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="report_id" value="{{ report.id }}">
+                                    <input type="hidden" name="action" value="complete">
+                                    <button type="submit" class="bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-600">สำเร็จ</button>
+                                </form>
+                            {% else %}
+                                <span class="text-green-500">สำเร็จ</span>
+                            {% endif %}
+                        </td>
+                        <td class="p-4">
+                            <button onclick="showReportDetails('{{ report.rental_code.product.name }}', '{{ report.issue_description }}')"
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">ดูรายละเอียด</button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-gray-500 py-8">
+                            <div class="flex flex-col items-center">
+                                <span class="material-icons text-7xl">report_problem</span>
+                                <p>ยังไม่มีการแจ้งปัญหา</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- User Detail Popup -->
+<div id="user-detail-popup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg w-4/5 max-w-4xl p-8 relative">
+        <!-- ปุ่มปิด -->
+        <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl" onclick="closeUserDetails()">✖</button>
+        
+        <div class="flex ml-16">
+            <!-- ส่วนรูปผู้ใช้งาน -->
+            <div class="flex-shrink-0 mr-8">
+                <img id="popup-avatar" src="" alt="Avatar" 
+                     class="w-40 h-40 rounded-full border border-gray-300 shadow-lg">
+            </div>
+
+            <!-- ส่วนข้อมูลผู้ใช้ -->
+            <div class="flex-grow">
+                <p id="popup-full-name" class="text-2xl font-bold mb-4">ชื่อผู้ใช้: -</p>
+                <p id="popup-email" class="text-lg text-gray-700 mb-3">อีเมล: -</p>
+                <p id="popup-tel-number" class="text-lg text-gray-700 mb-3">หมายเลขโทรศัพท์: -</p>
+                <p id="popup-sex" class="text-lg text-gray-700 mb-3">เพศ: -</p>
+            </div>
+        </div>
+
+        <!-- ส่วนที่อยู่ -->
+        <div class="mt-6 border-t pt-4">
+            <p id="popup-address" class="text-lg text-center text-gray-700">ที่อยู่: -</p>
+        </div>
+    </div>
+</div>
+
+
+<div id="reportDetailPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg w-4/5 max-w-2xl p-8 relative">
+        <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl" onclick="closeReportDetails()">✖</button>
+        <h2 class="text-2xl font-bold mb-4">รายละเอียดการแจ้งปัญหา</h2>
+        <p id="popup-product-name" class="text-xl font-semibold mb-4">ชื่ออุปกรณ์: -</p>
+        <textarea id="popup-issue-description" class="w-full p-4 border border-gray-300 rounded" rows="6" readonly></textarea>
+    </div>
+</div>
+
+<script>
+    function openConfirmationPopup(orderCode) {
+        document.getElementById('hidden-order-code').value = orderCode; 
+        document.getElementById('confirmation-popup').classList.remove('hidden'); 
+    }
+
+    function showUserDetails(fullName, email, telNumber, sex, address, avatar) {
+        document.getElementById('popup-full-name').textContent = `ชื่อผู้ใช้: ${fullName}`;
+        document.getElementById('popup-email').textContent = `อีเมล: ${email}`;
+        document.getElementById('popup-tel-number').textContent = `เบอร์โทร: ${telNumber}`;
+        document.getElementById('popup-sex').textContent = `เพศ: ${sex === 'M' ? 'ชาย' : 'หญิง'}`;
+        document.getElementById('popup-address').textContent = `ที่อยู่: ${address}`;
+        const avatarElement = document.getElementById('popup-avatar');
+        if (avatar) {
+            avatarElement.src = avatar;
+            avatarElement.style.display = 'block';
+        } else {
+            avatarElement.style.display = 'none';
+        }
+        document.getElementById('user-detail-popup').classList.remove('hidden');
+    }
+
+    function closeUserDetails() {
+        document.getElementById('user-detail-popup').classList.add('hidden');
+    }
+
+
+    function showReportDetails(productName, issueDescription) {
+        document.getElementById('popup-product-name').textContent = `ชื่ออุปกรณ์: ${productName}`;
+        document.getElementById('popup-issue-description').textContent = `รายละเอียดปัญหา: ${issueDescription}`;
+        document.getElementById('reportDetailPopup').classList.remove('hidden');
+    }
+
+    function closeReportDetails() {
+        document.getElementById('reportDetailPopup').classList.add('hidden');
+    }
+</script>
+{% endblock %}
