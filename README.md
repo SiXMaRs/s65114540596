@@ -1,7 +1,5 @@
 # Project_End
 
-# Project_End
-
 เริ่มต้นโคลนอันนี้ไปสะ
 
 gh repo clone SiXMaRs/ST_65114540596
