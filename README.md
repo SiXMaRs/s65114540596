@@ -1,52 +1,52 @@
 # Project_End
 
-ลิงค์อ่านคู่มือ: https://docs.google.com/document/d/1OmLe5vo7JPqMDD_EwycapPnnmZwK6VxahHN9HjBnwvI/edit?usp=sharing
+* ลิงค์อ่านคู่มือ: https://docs.google.com/document/d/1OmLe5vo7JPqMDD_EwycapPnnmZwK6VxahHN9HjBnwvI/edit?usp=sharing
 
 เริ่มต้นโคลนอันนี้ไปสะ
 
-gh repo clone SiXMaRs/ST_65114540596
+- gh repo clone SiXMaRs/ST_65114540596
 
 
 โคลนเสร็จมึงเข้าไปที่ cd ST_65114540596
 
 เช็คว่ามีpython ไหมโดยคำสั่ง 
 
-python –version
+- python –version
 
 
 ถ้าไม่มีpython ก็ไปโหลดก่อน https://www.python.org/downloads/
 
 หรือมึงจะโหลดผ่าน scoop ก็ได้ ก่อนอื่นติดตั้ง scoop ด้วย
 
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+- Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
-Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+- Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
 
 แล้วก็โหลด python 
 
-scoop bucket add main
+- scoop bucket add main
 
-scoop install main/python
+- scoop install main/python
 
 
 โหลดเสร็จแล้วมึงก็สร้าง venv สะ ด้วยคำสั่ง 
 
-python -m venv venv 
+- python -m venv venv 
 
 สร้างเสร็จให้ activate venv จากคำสั่ง
 
-venv/scripts/activate
+- venv/scripts/activate
 
 
 activate เสร็จให้เข้าไปที่ final โดย
 
-cd final
+- cd final
 
 
 เมื่อเข้าไปแล้วให้ทำการโหลด
 
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 
 ติดตั้ง mysql โดย https://dev.mysql.com/downloads/installer/
@@ -72,9 +72,9 @@ pip install -r requirements.txt
 
 จากนั้นทำการ makemigrations และ migrate
 
-python manage.py makemigrations
+- python manage.py makemigrations
 
-python manage.py migrate
+- python manage.py migrate
 
 
 ถ้าไม่ได้ให้ไปลบข้อมูลไมเกรทที่โฟลเดอร์ migrations ลบออกให้หมดเหลือไว้แค่ __init__
@@ -84,9 +84,9 @@ python manage.py migrate
 
 จากนั้นให้รันคำสั่งใหม่ 
 
-python manage.py makemigrations
+- python manage.py makemigrations
 
-python manage.py migrate
+- python manage.py migrate
 
 
 เสร็จแล้วรันserver
