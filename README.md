@@ -1,6 +1,6 @@
 # Project_End
 
-* ลิงค์อ่านคู่มือ: https://docs.google.com/document/d/1OmLe5vo7JPqMDD_EwycapPnnmZwK6VxahHN9HjBnwvI/edit?usp=sharing
+* ลิงค์อ่านคู่มือ: https://docs.google.com/document/d/1OmLe5vo7JPqMDD_EwycapPnnmZwK6VxahHN9HjBnwvI/edit?usp=sharing *
 
 เริ่มต้นโคลนอันนี้ไปสะ
 
