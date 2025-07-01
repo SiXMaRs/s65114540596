@@ -38,13 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'django_browser_reload',
+    # 'django_browser_reload',
+    'tailwind',
     'vfit',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -148,6 +149,7 @@ EMAIL_HOST_USER = 'wuttinan0934426621@gmail.com'
 EMAIL_HOST_PASSWORD = 'ifxn lnjt gxvi shhb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+TAILWIND_APP_NAME = 'theme'
 
 ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
