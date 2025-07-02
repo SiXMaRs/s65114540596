@@ -6,6 +6,7 @@
 
 - gh repo clone SiXMaRs/ST_65114540596
 
+ถ้าไม่ได้มึงไปโหลดอันนี้สะ https://cli.github.com/
 
 โคลนเสร็จมึงเข้าไปที่ cd ST_65114540596
 
