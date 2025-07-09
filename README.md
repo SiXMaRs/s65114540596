@@ -16,7 +16,7 @@ cd ST_65114540596/final
    
 docker compose up --build
 
-6. เข้าใช้งานระบบเปิด browser แล้วเข้า:
+5. เข้าใช้งานระบบเปิด browser แล้วเข้า:
    
 http://localhost:8000
 
