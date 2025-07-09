@@ -12,9 +12,10 @@ gh repo clone SiXMaRs/ST_65114540596
 
 3. เข้าโฟลเดอร์โปรเจกต์
 cd ST_65114540596/final
-4. Run project ด้วย Docker Compose
+4. Run project ด้วย Docker Compose:
+   
 docker compose up --build
-5. เข้าใช้งานระบบ
+6. เข้าใช้งานระบบ
 เปิด browser แล้วเข้า:
 http://localhost:8000
 
