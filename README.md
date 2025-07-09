@@ -3,7 +3,7 @@
 # Run ผ่าน docker 
 1. ต้องติดตั้ง Docker บนเครื่องก่อน
 ดาวน์โหลดและติดตั้ง Docker Desktop:
-🔗 Download Docker for Windows
+[🔗 Download Docker for Windows](https://www.docker.com/products/docker-desktop/)
 
 2. Clone โปรเจกต์
 เปิด Terminal หรือ Command Prompt แล้วพิมพ์คำสั่งนี้เพื่อ clone โปรเจกต์:
