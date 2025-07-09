@@ -15,8 +15,9 @@ cd ST_65114540596/final
 4. Run project ด้วย Docker Compose:
    
 docker compose up --build
-6. เข้าใช้งานระบบ
-เปิด browser แล้วเข้า:
+
+6. เข้าใช้งานระบบเปิด browser แล้วเข้า:
+   
 http://localhost:8000
 
 ---
