@@ -86,7 +86,7 @@ DATABASES = {
         'NAME': 'vfit',  
         'USER': 'root',       
         'PASSWORD': 'zx123456',   
-        'HOST': 'localhost',           
+        'HOST': 'db',           
         'PORT': '3306',               
     },
     'sqlite': {
