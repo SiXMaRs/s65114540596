@@ -80,14 +80,23 @@ WSGI_APPLICATION = 'final.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'unsafe-secret-key')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'vfit',  
-        'USER': 'root',       
-        'PASSWORD': 'zx123456',   
-        'HOST': 'db',           
-        'PORT': '3306',               
+        'NAME': os.getenv('DB_NAME', 'vfit'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'zx123456'),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'OPTIONS': {'charset': 'utf8mb4'},
     },
     'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',

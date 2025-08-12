@@ -5,6 +5,8 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    env_file:
+      - .env
     depends_on:
       - db
     restart: always
@@ -15,6 +17,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: zx123456
       MYSQL_DATABASE: vfit
+      MYSQL_USER: root
+      MYSQL_PASSWORD: zx123456
     ports:
       - "3307:3306"
     volumes:
