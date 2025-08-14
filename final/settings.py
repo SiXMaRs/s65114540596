@@ -91,11 +91,11 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', 'vfit'),
-        'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'zx123456'),
-        'HOST': os.getenv('DB_HOST', 'db'),
-        'PORT': os.getenv('DB_PORT', '3306'),
+        'NAME': os.getenv('MYSQL_DATABASE'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '3306',
         'OPTIONS': {'charset': 'utf8mb4'},
     },
     'sqlite': {
