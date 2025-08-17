@@ -1,0 +1,11 @@
+- model: vfit.users
+  pk: 1
+  fields:
+    full_name: "Test One"
+    avatar: null   
+    tel_number: "0812345678"
+    email: "t1@test.co"
+    password: "zx123456"
+    sex: "M"    
+    address: "123 Demo Street, Bangkok"
+    is_superuser: true

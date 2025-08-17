@@ -49,7 +49,7 @@ except Exception:
     need_seed = False
 
 if need_seed:
-    for f in ["vfit/fixtures/products.yaml","vfit/fixtures/exercise.yaml","products.yaml","exercise.yaml"]:
+    for f in ["vfit/fixtures/products.yaml","vfit/fixtures/exercise.yaml","vfit/fixtures/user.yaml","products.yaml","exercise.yaml","user.yaml"]:
         if exists(f):
             try:
                 call_command('loaddata', f, verbosity=0)
