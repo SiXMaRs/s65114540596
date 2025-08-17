@@ -1,8 +1,9 @@
 django
+psycopg[binary]==3.2.*
 pillow
 django-tailwind
-mysqlclient
-pymysql
+# mysqlclient
+# pymysql
 pyyaml
 django-cron
 celery

@@ -90,20 +90,15 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DATABASE'),
-        'USER': os.getenv('MYSQL_USER'),
-        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'vfit'),
+        'USER': os.getenv('POSTGRES_USER', 'vfit_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
         'HOST': 'db',
-        'PORT': '3306',
-        'OPTIONS': {'charset': 'utf8mb4'},
-    },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+        'CONN_MAX_AGE': 60,
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
