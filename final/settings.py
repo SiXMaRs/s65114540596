@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = 'final.urls'
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
@@ -87,6 +87,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'unsafe-secret-key')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+def _csv(v, default=""):
+    return [x.strip() for x in (v or default).split(",") if x.strip()]
+
+ALLOWED_HOSTS = _csv(os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"))
+
+# CSRF: รวมกรณีระบุพอร์ต (เช่น 10596)
+_public_port = os.getenv("PUBLIC_PORT", "10596")
+_csrf = []
+for h in ALLOWED_HOSTS:
+    _csrf += [f"http://{h}", f"https://{h}"]
+    if _public_port:
+        _csrf += [f"http://{h}:{_public_port}", f"https://{h}:{_public_port}"]
+CSRF_TRUSTED_ORIGINS = _csrf
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 DATABASES = {
     'default': {

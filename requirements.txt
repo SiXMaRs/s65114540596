@@ -1,5 +1,7 @@
 django
 psycopg[binary]==3.2.*
+gunicorn==21.*
+whitenoise==6.*
 pillow
 django-tailwind
 # mysqlclient

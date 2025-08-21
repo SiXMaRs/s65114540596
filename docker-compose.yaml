@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "8000:8000"
+      - "10596:8000"
     volumes:
       - .:/app
     env_file:
@@ -22,7 +22,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5433:5432"     
+      - "20596:5432"     
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
