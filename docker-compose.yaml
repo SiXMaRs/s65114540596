@@ -2,7 +2,6 @@ services:
   web:
     build: .
     ports:
-      ports:
       - "${PUBLIC_PORT}:8000"
     volumes:
       - .:/app
