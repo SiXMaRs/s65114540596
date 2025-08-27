@@ -90,7 +90,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 def _csv(v, default=""):
     return [x.strip() for x in (v or default).split(",") if x.strip()]
 
-ALLOWED_HOSTS = _csv(os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"))
+ALLOWED_HOSTS = _csv(os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,10.80.21.37"))
 
 # CSRF: รวมกรณีระบุพอร์ต (เช่น 10596)
 _public_port = os.getenv("PUBLIC_PORT", "10596")
