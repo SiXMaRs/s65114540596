@@ -11,6 +11,27 @@ services:
       db:
         condition: service_healthy
     restart: always
+    networks:
+      - default          
+      - traefik-public
+    labels:
+      # --- การตั้งค่าหลักสำหรับ Traefik ---
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+
+      # --- 1. ตั้งค่า Router: กำหนดเงื่อนไขการรับ request ---
+      # สร้าง Router ชื่อ "vfit-web-router" ให้รับ request ที่เข้ามาที่ path /app1
+      - "traefik.http.routers.vfit-web-router.rule=PathPrefix(`/app1`)"
+      # ระบุให้ Router นี้ใช้ Middleware ที่ชื่อว่า "vfit-stripprefix"
+      - "traefik.http.routers.vfit-web-router.middlewares=vfit-stripprefix@docker"
+      
+      # --- 2. ตั้งค่า Middleware: แปลง request ก่อนส่งต่อ ---
+      # สร้าง Middleware ชื่อ "vfit-stripprefix" เพื่อ "ตัด" /app1 ออกจาก URL
+      - "traefik.http.middlewares.vfit-stripprefix.stripprefix.prefixes=/app1"
+
+      # --- 3. ตั้งค่า Service: กำหนดปลายทางของ request ---
+      # ระบุให้ Traefik ส่ง request ไปยัง port 8000 ของ container นี้
+      - "traefik.http.services.vfit-web-service.loadbalancer.server.port=8000"
 
   db:
     image: postgres:16
@@ -28,14 +49,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-  
-  nginx:
-    build: ./nginx # บอกให้ Docker Compose ใช้ Dockerfile ที่อยู่ในโฟลเดอร์ nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - web # Nginx ต้องรอให้ service 'web' รันก่อน
-    restart: always
+    networks:
+      - default
 
 volumes:
   pg_data:
+
+networks:
+  default:
+    driver: bridge
+  traefik-public:
+    external: true
