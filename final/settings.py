@@ -7,6 +7,7 @@ from pathlib import Path
 # CORE PATHS & SECURITY
 # ==============================================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-fallback-key-for-dev')
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
@@ -75,6 +76,8 @@ DATABASES = {
 # STATIC & MEDIA FILES CONFIGURATION
 # ==============================================================================
 STATIC_URL = 'static/'
+
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_URL = '/media/'
