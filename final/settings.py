@@ -17,7 +17,7 @@ ALLOWED_HOSTS = _csv(os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"))
 
 # --- Path Prefix ---
 # บอกให้ Django รู้ว่ามี Prefix อยู่ข้างหน้า (สำคัญมาก)
-FORCE_SCRIPT_NAME = '/wuttinan596'
+FORCE_SCRIPT_NAME = '/s65114540596'
 
 # ==============================================================================
 # APPLICATION DEFINITION
